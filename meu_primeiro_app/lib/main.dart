@@ -1,103 +1,74 @@
 import 'package:flutter/material.dart';
 
- 
-
-// A função main() é o ponto de entrada de todo app Flutter.
-
 void main() {
-
-  // runApp() "infla" o widget principal e o exibe na tela.
-
   runApp(const ProfileApp());
-
 }
-
- 
-
-// Nosso widget principal. Ele é Stateless porque, por enquanto, não guarda nenhum estado.
 
 class ProfileApp extends StatefulWidget {
-
   const ProfileApp({super.key});
 
- 
-
   @override
-
   State<ProfileApp> createState() => _ProfileAppState();
-
 }
-
- 
 
 class _ProfileAppState extends State<ProfileApp> {
-
-  // Variável de estado: guarda a informação que pode mudar.
-
-  // O underscore (_) a torna privada para esta classe.
-
+  // Variável de estado
   String _displayedName = 'Nome do Usuário';
 
- 
+  // 1. Controller criado dentro da classe
+  final TextEditingController _nameController = TextEditingController();
 
   @override
-
-  Widget build(BuildContext context) {
-
-    return MaterialApp(
-
-      home: Scaffold(
-
-        appBar: AppBar(
-
-          title: const Text('Cartão de Perfil Interativo'),
-
-          backgroundColor: Colors.blueGrey,
-
-        ),
-
-        body: Container(
-
-          padding: const EdgeInsets.all(16.0),
-
-          alignment: Alignment.center,
-
-          child: Column(
-
-            mainAxisAlignment: MainAxisAlignment.center,
-
-            children: [
-
-              // Agora, este Text usa a nossa variável de estado.
-
-              Text(
-
-                _displayedName, // Usa a variável de estado
-
-                style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-
-              ),
-
-              const Text(
-
-                'Desenvolvedor(a) Flutter em treinamento',
-
-                style: TextStyle(fontSize: 16, color: Colors.grey),
-
-              ),
-
-            ],
-
-          ),
-
-        ),
-
-      ),
-
-    );
-
+  void dispose() {
+    // Boa prática: descartar o controller quando a tela for destruída
+    _nameController.dispose();
+    super.dispose();
   }
 
-}
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: Scaffold(
+        appBar: AppBar(
+          title: const Text('Cartão de Perfil Interativo'),
+          backgroundColor: Colors.blueGrey,
+        ),
+        body: Container(
+          padding: const EdgeInsets.all(16.0),
+          alignment: Alignment.center,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            // 2. Os widgets filhos ficam aqui dentro do Column
+            children: [
+              Text(
+                _displayedName,
+                style: const TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              const Text(
+                'Desenvolvedor(a) Flutter em treinamento',
+                style: TextStyle(
+                  fontSize: 16,
+                  color: Colors.grey,
+                ),
+              ),
+              // Espaçamento
+              const SizedBox(height: 30),
 
- 
+              // O widget para entrada de texto
+              TextField(
+                controller: _nameController,
+                decoration: const InputDecoration(
+                  border: OutlineInputBorder(),
+                  labelText: 'Digite seu nome',
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
