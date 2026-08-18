@@ -16,7 +16,7 @@ void main() {
 
 // Nosso widget principal. Ele é Stateless porque, por enquanto, não guarda nenhum estado.
 
-class ProfileApp extends StatelessWidget {
+class ProfileApp extends StatefulWidget {
 
   const ProfileApp({super.key});
 
@@ -24,13 +24,27 @@ class ProfileApp extends StatelessWidget {
 
   @override
 
+  State<ProfileApp> createState() => _ProfileAppState();
+
+}
+
+ 
+
+class _ProfileAppState extends State<ProfileApp> {
+
+  // Variável de estado: guarda a informação que pode mudar.
+
+  // O underscore (_) a torna privada para esta classe.
+
+  String _displayedName = 'Nome do Usuário';
+
+ 
+
+  @override
+
   Widget build(BuildContext context) {
 
-    // MaterialApp é o widget que nos dá a base de um app (temas, navegação, etc.).
-
     return MaterialApp(
-
-      // Scaffold é o "esqueleto" de uma tela. Ele nos dá a AppBar (barra superior) e o body (corpo).
 
       home: Scaffold(
 
@@ -44,31 +58,27 @@ class ProfileApp extends StatelessWidget {
 
         body: Container(
 
-          // Adiciona um espaçamento interno de 16 pixels em todos os lados.
-
           padding: const EdgeInsets.all(16.0),
-
-          // Alinha o conteúdo no centro.
 
           alignment: Alignment.center,
 
-          child: Column( // Organiza os widgets em uma coluna.
+          child: Column(
 
-            mainAxisAlignment: MainAxisAlignment.center, // Centraliza a coluna verticalmente.
+            mainAxisAlignment: MainAxisAlignment.center,
 
-            children: const [
+            children: [
 
-              // O Text é o widget para exibir texto.
+              // Agora, este Text usa a nossa variável de estado.
 
               Text(
 
-                'Nome do Usuário',
+                _displayedName, // Usa a variável de estado
 
-                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
 
               ),
 
-              Text(
+              const Text(
 
                 'Desenvolvedor(a) Flutter em treinamento',
 
@@ -89,3 +99,5 @@ class ProfileApp extends StatelessWidget {
   }
 
 }
+
+ 
